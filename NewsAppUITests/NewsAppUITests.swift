@@ -2,7 +2,7 @@
 //  NewsAppUITests.swift
 //  NewsAppUITests
 //
-//  Created by narfk on 05/10/2023.
+//  Created by narfk on 06/10/2023.
 //
 
 import XCTest
@@ -27,7 +27,20 @@ final class NewsAppUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // Attendez que la liste des articles soit visible à l'écran.
+        let expectation = XCTestExpectation(description: "Attendez que la liste des articles soit chargée")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    expectation.fulfill()
+                }
+                wait(for: [expectation], timeout: 5)
+
+        let collectionViewsQuery = app.collectionViews
+        XCTAssertTrue(collectionViewsQuery.count > 0)
+
+        collectionViewsQuery/*@START_MENU_TOKEN@*/.buttons["iPhone 15 / 15 Pro : quel est le meilleur moment pour acheter ?"]/*[[".cells.buttons[\"iPhone 15 \/ 15 Pro : quel est le meilleur moment pour acheter ?\"]",".buttons[\"iPhone 15 \/ 15 Pro : quel est le meilleur moment pour acheter ?\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        let newsButton = app.navigationBars["Détails de la News"].buttons["News"]
+        newsButton.tap()
     }
 
     func testLaunchPerformance() throws {

@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct NewsAppApp: App {
+
+    @State private var isLoading = true
+
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
     }
 }
+
